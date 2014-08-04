@@ -1,0 +1,14 @@
+#!/usr/local/bin/escript
+
+main([Port]) ->
+	simple_tcp_server:create(Port, {yar_msg, test_recv_decode}),
+	main_loop();
+main([]) ->
+	io:format("Usage: xxx PORT~n").
+
+main_loop() ->
+	receive
+		_ ->
+			main_loop()
+	end.
+
