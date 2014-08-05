@@ -1,7 +1,7 @@
 #!/usr/local/bin/escript
 
 main([Port]) ->
-	simple_tcp_server:create(Port, {yar_msg, test_recv_decode}),
+	simple_tcp_server:create(Port, {yar_server, test_drive}),
 	main_loop();
 main([]) ->
 	io:format("Usage: xxx PORT~n").
