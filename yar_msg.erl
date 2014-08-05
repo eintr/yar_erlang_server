@@ -1,17 +1,10 @@
 -module(yar_msg).
 
--export([test_recv_decode/1, recv_decode/1, encode_send/2]).
+-export([recv_decode/1, encode_send/2]).
 
 -author("牛海青<nhf0424@gmail.com>").
 
 -include("yar_msg.hrl").
-
-test_recv_decode(Socket) ->
-	io:format("Received: ~p~n", [recv_decode(Socket)]),
-	encode_send(Socket, example_answer()).
-
-example_answer() ->
-	{1000, #{"status"=>0, "parameters"=>nil, "data"=>[true, 0.234200, "dummy"]}}.
 
 recv_decode(Socket) ->
 	case gen_tcp:recv(Socket, ?sizeof_yar_msg_hdr) of
@@ -19,7 +12,6 @@ recv_decode(Socket) ->
 				Version:16/big-unsigned-integer,
 				?yar_magic_num:32/big-unsigned-integer,
 				_Reserved:32/big-unsigned-integer,
-%				Provider:8/unsigned-integer-unit:32,
 				Provider:8/binary-unit:32,
 				Token:8/unsigned-integer-unit:32,
 				Body_len:32/big-unsigned-integer	>>} ->
